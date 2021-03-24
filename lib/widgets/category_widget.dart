@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:forsale/models/category.dart';
-import 'package:forsale/widgets/category_screen.dart';
+import 'package:forsale/screens/category_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const _url = "https://www.youtube.com/watch?v=mueGJ79oke8";
@@ -35,7 +35,7 @@ class CategoryWidget extends StatelessWidget {
                 onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => CategoryScreen(category: category),
+                        builder: (_) => CategoryScreen(index: index),
                       ),
                     ),
                 child: Container(

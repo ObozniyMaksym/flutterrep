@@ -50,13 +50,43 @@ class _HomeScreenState extends State<HomeScreen> {
                       ]))),
                   SizedBox(height: 30),
                   Container(
-                    height: 140,
-                    color: Theme.of(context).accentColor,
-                    child: Text(
-                      "If I have time I would add smth here",
-                      style: TextStyle(color: Colors.white,),
-                    ),
-                  ),
+                      height: 140,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: Theme.of(context).accentColor,
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 30, 5, 20),
+                            child: Column (
+                              children: [
+                                Text(
+                                  "-${categories[0].discounts[0].discount} OFF", 
+                                  style: TextStyle(fontSize: 30, color: Colors.white)
+                                ),
+                                Spacer(),
+                                Container(
+                                  width: 100,
+                                  child: Text(
+                                    "${categories[0].discounts[1].description} OFF", 
+                                    
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(fontSize: 15, color: Colors.white)
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Spacer(),
+                          Image(
+                              fit: BoxFit.contain,
+                              image: AssetImage(
+                                  categories[0].discounts[0].imageURL),
+                            ),
+                          
+                        ],
+                      )),
                   CategoryWidget()
                 ],
               )),

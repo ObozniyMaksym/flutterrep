@@ -86,6 +86,6 @@ List<Category> categories = [
   Category(
     imageURL: "assets/images/entertainment.jpg",
     title: "entertainment",
-    discounts: clothesDiscounts
+    discounts: entertainmentDiscounts
   )
 ];
