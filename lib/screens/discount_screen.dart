@@ -1,19 +1,39 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:forsale/models/category.dart';
 import 'package:flutter/material.dart';
+import 'package:forsale/models/discount.dart';
 
-class DiscountScreen extends StatefulWidget {
-  final int categoryIndex;
-  final int index;
-
-  DiscountScreen({this.categoryIndex, this.index});
-
-  @override
-  _DiscountScreenState createState() => _DiscountScreenState();
+Widget _buildRate(BuildContext context, DocumentSnapshot document) {
+  int curRate = document['rate'];
+  return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+    FloatingActionButton(
+      onPressed: () {
+        document.reference.update({
+            "rate": curRate - 1,
+        });
+        return;
+      },
+      child: Icon(Icons.minimize),
+    ),
+    Text(curRate.toString(),
+        style: TextStyle(fontSize: 30, color: Colors.white)),
+    FloatingActionButton(
+        onPressed: () {
+        document.reference.update({
+            "rate": curRate + 1,
+        });
+        return;
+        },
+        child: Icon(Icons.add)),
+  ]);
 }
 
-class _DiscountScreenState extends State<DiscountScreen> {
+class DiscountScreen extends StatelessWidget {
+  final Discount discount;
+  DiscountScreen({this.discount});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,52 +52,25 @@ class _DiscountScreenState extends State<DiscountScreen> {
         body: Row(
           children: [
             Expanded(
-                          child: Column(
-                
+              child: Column(
                 children: [
                   GestureDetector(
                     onTap: () => Navigator.pop(context),
                     child: Image(
                       height: 200,
-                      image: AssetImage(categories[widget.categoryIndex]
-                          .discounts[widget.index]
-                          .imageURL),
+                      image: AssetImage(discount.imageURL),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                       FloatingActionButton(
-                      
-                      onPressed: () {
-                        categories[widget.categoryIndex]
-                            .discounts[widget.index]
-                            .rate--;
-                        print(categories[widget.categoryIndex]
-                            .discounts[widget.index]
-                            .rate);
-                        return;
-                      },
-                      child: Icon(Icons.minimize),
-                  ),  
-                      Text(categories[widget.categoryIndex]
-                      .discounts[widget.index]
-                      .rate
-                      .toString(),
-                      style: TextStyle(fontSize: 30, color: Colors.white)),
-                  FloatingActionButton(
-                      onPressed: () {
-                        categories[widget.categoryIndex]
-                            .discounts[widget.index]
-                            .rate++;
-                        print(categories[widget.categoryIndex]
-                            .discounts[widget.index]
-                            .rate);
-                        return;
-                      },
-                      child: Icon(Icons.add)),
-                    ],
-                  ),                
+                  StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('discounts')
+                          .where('imageURL', isEqualTo: discount.imageURL)
+                          .snapshots(),
+                      builder: (context, snapshot) {
+                        print(snapshot.hasData);
+                        if (snapshot.hasData)
+                          return _buildRate(context, snapshot.data.docs[0]);
+                      }),
                 ],
               ),
             ),

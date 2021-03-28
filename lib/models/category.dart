@@ -17,19 +17,22 @@ List<Discount> foodDiscounts = [
     imageURL: "assets/images/burger.jpg",
     discount: 50,
     description: "Takeaway discount",
-    rate: 5
+    rate: 5,
+    category: "food"
   ),
   Discount(
     imageURL: "assets/images/pizza.jpg",
     discount: 30,
     description: "Get a discount for second pizza",
-    rate: 10
+    rate: 10,
+    category: "food"
   ),
   Discount(
     imageURL: "assets/images/borscht.jpg",
     discount: 10,
     description: "Wow! The dish of the day!!!",
-    rate: 100
+    rate: 100,
+    category: "food"
   )
 ];
 
@@ -38,13 +41,15 @@ List<Discount> clothesDiscounts = [
     imageURL: "assets/images/timberland.jpg",
     discount: 50,
     description: "Final sale",
-    rate: 5
+    rate: 5,
+    category: "clothes"
   ),
   Discount(
     imageURL: "assets/images/ball.jpg",
     discount: 25,
     description: "Random description",
-    rate: 18
+    rate: 18,
+    category: "clothes"
   )
 ];
 
@@ -54,25 +59,28 @@ List<Discount> entertainmentDiscounts = [
     imageURL: "assets/images/bowling.jpg",
     discount: 50,
     description: "For sure, you need some bowling today",
-    rate: 5
+    rate: 5,
+    category: "entertainment"
   ),
   Discount(
     imageURL: "assets/images/football.jpg",
     discount: 25,
     description: "Play football with friends",
-    rate: 18
+    rate: 18,
+    category: "entertainment"
   ),
   Discount(
     imageURL: "assets/images/zoo.jpg",
     discount: 37,
     description: "I don't like zoo's but this giraffe is so cute",
-    rate: 18
+    rate: 18,
+    category: "entertainment"
   )
 ];
 
 
 
-List<Category> categories = [
+List<Category> ccategories = [
   Category(
     imageURL: "assets/images/food.jpg",
     title: "food",
