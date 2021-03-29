@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gravatar/flutter_gravatar.dart';
 import 'package:forsale/models/category.dart';
-import 'package:forsale/models/discount.dart';
 
 class AddDiscountScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormBuilderState>();
@@ -52,16 +51,19 @@ class AddDiscountScreen extends StatelessWidget {
                         _formKey.currentState.save();
                         Map<String, dynamic> ds = _formKey.currentState.value;
                         print(ds);
-                        var imageURL = Gravatar("random_email@gmail.com").imageUrl();
+                        var imageURL =
+                            Gravatar("random_email@gmail.com").imageUrl();
                         print(imageURL.toString());
                         Map<String, dynamic> q = {
-                        'description':  ds['description'],
-                        'discount':  ds['discount'],
-                        'category':  ds['category'],
-                        'imageURL': imageURL.toString(),
-                        'rate': 0,
+                          'description': ds['description'],
+                          'discount': ds['discount'],
+                          'category': ds['category'],
+                          'imageURL': imageURL.toString(),
+                          'rate': 0,
                         };
-                        FirebaseFirestore.instance.collection('discounts').add(q);
+                        FirebaseFirestore.instance
+                            .collection('discounts')
+                            .add(q);
                       },
                     )
                   ],

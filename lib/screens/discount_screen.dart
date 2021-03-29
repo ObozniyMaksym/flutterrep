@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
-import 'package:forsale/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:forsale/models/discount.dart';
 
@@ -18,7 +17,7 @@ Widget _buildRate(BuildContext context, DocumentSnapshot document) {
       child: Icon(Icons.minimize),
     ),
     Text(curRate.toString(),
-        style: TextStyle(fontSize: 30, color: Colors.white)),
+        style: TextStyle(fontSize: 30, color: Colors.black)),
     FloatingActionButton(
         onPressed: () {
         document.reference.update({
@@ -70,6 +69,8 @@ class DiscountScreen extends StatelessWidget {
                         print(snapshot.hasData);
                         if (snapshot.hasData)
                           return _buildRate(context, snapshot.data.docs[0]);
+                        else
+                          return Container(color: Colors.red);
                       }),
                 ],
               ),
