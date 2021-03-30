@@ -20,9 +20,12 @@ class AuthenticationService {
   }
   Future<String> signUp(String email, String password) async {
      try{
+      print("Trying");
       await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      return "Signed Out";
+      print('Signing');
+      return "Signed Up";
     }  on FirebaseAuthException catch(e) {
+      print(e.message);
       return e.message;
     } 
   }

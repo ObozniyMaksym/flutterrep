@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
             //scaffoldBackgroundColor: Color(0xFF000005),
             accentColor: Color(0xFF010416),
           ),
-          home: AuthenticationWrapper(),
+          home: HomeScreen(),
+          //home: AuthenticationWrapper(),
         ));
   }
 }

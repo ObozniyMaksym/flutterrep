@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:forsale/authentication_service.dart';
 import 'package:forsale/models/discount.dart';
-import 'package:forsale/screens/add_discount.dart';
+import 'package:forsale/widgets/app_bar.dart';
 import 'package:forsale/widgets/category_widget.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   final Discount random = Discount(
@@ -13,32 +11,16 @@ class HomeScreen extends StatelessWidget {
       description: "Takeaway discount",
       rate: 5,
       category: "food");
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Hello, Maksym'), actions: <Widget>[
-        IconButton(
-            icon: const Icon(Icons.turned_in_outlined),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddDiscountScreen()),
-              );
-            }),
-          ElevatedButton(
-          onPressed: () {
-            context.read<AuthenticationService>().signOut();
-          },
-          child: Text("Sign out"),
-        )
-      ]),
+      appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 20),
         child: Row(children: [
           Expanded(
               child: ListView(
-            //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
                   height: 40,
@@ -47,7 +29,7 @@ class HomeScreen extends StatelessWidget {
                       border: Border.all(color: Color(0xFF454548))),
                   child: Center(
                       child: Row(children: [
-                    Icon(Icons.search, color: Colors.white, size: 25),
+                    Icon(Icons.search, color: Colors.black, size: 25),
                     Text(
                       "Look for",
                       style: TextStyle(color: Color(0xFF454548)),
@@ -59,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                   height: 140,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(40),
-                    color: Theme.of(context).accentColor,
+                    color: Colors.teal[400],
                   ),
                   child: Row(
                     children: [
@@ -88,6 +70,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   )),
+              SizedBox(height: 10),
               CategoryWidget(),
             ],
           )),

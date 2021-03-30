@@ -31,15 +31,15 @@ class _CategoryWidgetState extends State<CategoryWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      
+    
       Row(children: <Widget>[
         Text('Categories',
-            style: TextStyle(color: Colors.purpleAccent, fontSize: 30)),
+            style: TextStyle(color: Colors.blue[400], fontSize: 23)),
         Spacer(),
         GestureDetector(
             onTap: _launch,
             child: Text("See all",
-                style: TextStyle(color: Colors.purpleAccent, fontSize: 30)))
+                style: TextStyle(color: Colors.blue[400], fontSize: 23)))
       ]),
       Container(
         height: 300,
@@ -78,7 +78,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                                 height: 120.0,
                                 width: 200.0,
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
+                                  color: Colors.teal[400],
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
                                 child: Padding(
