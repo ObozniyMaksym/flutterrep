@@ -14,10 +14,10 @@ class DiscountWidget extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 2,
-            child: Image(
+            child: Image.network(
+              discount.imageURL,
               fit: BoxFit.cover,
               height: 50,
-              image: AssetImage(discount.imageURL),
             ),
           ),
           Row(

@@ -11,15 +11,13 @@ import 'package:forsale/widgets/discount_widget.dart';
 class CategoryScreen extends StatefulWidget {
   final Category category;
   CategoryScreen({this.category});
-  @override 
+  @override
   State<StatefulWidget> createState() => _CategoryScreenState();
-  
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
   Category category;
   Future getDiscounts;
-
 
   Future _getDiscounts() async {
     return await FirebaseFirestore.instance
@@ -27,6 +25,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         .where('category', isEqualTo: category.title)
         .get();
   }
+
   @override
   void initState() {
     super.initState();
@@ -40,15 +39,18 @@ class _CategoryScreenState extends State<CategoryScreen> {
       appBar: CustomAppBar(),
       body: Column(
         children: <Widget>[
-          
           Expanded(
               child: FutureBuilder(
                   future: getDiscounts,
                   builder: (context, snapshot) {
                     print(snapshot.connectionState);
                     if (!snapshot.hasData)
-                      return Container(
-                          height: 100, width: 100, color: Colors.red);
+                      return Center(
+                        child: Container(
+                            width: 100,
+                            height: 100,
+                            child: CircularProgressIndicator()),
+                      );
                     else
                       return ListView.builder(
                         scrollDirection: Axis.vertical,

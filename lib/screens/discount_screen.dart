@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/material.dart';
 import 'package:forsale/models/discount.dart';
+import 'package:forsale/widgets/app_bar.dart';
 
 Widget _buildRate(BuildContext context, DocumentSnapshot document) {
   int curRate = document['rate'];
@@ -10,7 +11,7 @@ Widget _buildRate(BuildContext context, DocumentSnapshot document) {
     FloatingActionButton(
       onPressed: () {
         document.reference.update({
-            "rate": curRate - 1,
+          "rate": curRate - 1,
         });
         return;
       },
@@ -20,10 +21,10 @@ Widget _buildRate(BuildContext context, DocumentSnapshot document) {
         style: TextStyle(fontSize: 30, color: Colors.black)),
     FloatingActionButton(
         onPressed: () {
-        document.reference.update({
+          document.reference.update({
             "rate": curRate + 1,
-        });
-        return;
+          });
+          return;
         },
         child: Icon(Icons.add)),
   ]);
@@ -36,18 +37,7 @@ class DiscountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text('Hello, Maksym'), actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.turned_in_outlined),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Random text'),
-                ),
-              );
-            },
-          )
-        ]),
+        appBar: CustomAppBar(),
         body: Row(
           children: [
             Expanded(
@@ -70,7 +60,12 @@ class DiscountScreen extends StatelessWidget {
                         if (snapshot.hasData)
                           return _buildRate(context, snapshot.data.docs[0]);
                         else
-                          return Container(color: Colors.red);
+                          return Center(
+                            child: Container(
+                                width: 100,
+                                height: 100,
+                                child: CircularProgressIndicator()),
+                          );
                       }),
                 ],
               ),
