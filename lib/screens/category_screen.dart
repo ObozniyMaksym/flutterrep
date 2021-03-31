@@ -1,12 +1,29 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/rendering.dart';
 import 'package:forsale/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:forsale/models/discount.dart';
-import 'package:forsale/screens/discount_screen.dart';
 import 'package:forsale/widgets/app_bar.dart';
 import 'package:forsale/widgets/discount_widget.dart';
+
+List<Discount> makeList(var snapshot) {
+  print("12134324324354");
+  List<Discount> res = [];
+  print(snapshot.length);
+  for (var i = 0; i < snapshot.length; i++) {
+    Discount discount = Discount(
+      rate: snapshot[i]['rate'],
+      imageURL: snapshot[i]['imageURL'],
+      description: snapshot[i]['description'],
+      discount: snapshot[i]['discount'], 
+      category: snapshot[i]['category'],
+    );
+
+    print(discount.rate);
+    res.add(discount);
+  }
+  return res;
+}
 
 class CategoryScreen extends StatefulWidget {
   final Category category;
@@ -51,31 +68,12 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             height: 100,
                             child: CircularProgressIndicator()),
                       );
-                    else
-                      return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        itemCount: snapshot.data.docs.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          Discount discount = Discount(
-                            imageURL: snapshot.data.docs[index]['imageURL'],
-                            discount: snapshot.data.docs[index]['discount'],
-                            description: snapshot.data.docs[index]
-                                ['description'],
-                            rate: snapshot.data.docs[index]['rate'],
-                            category: category.title,
-                          );
-                          return GestureDetector(
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) =>
-                                    DiscountScreen(discount: discount),
-                              ),
-                            ),
-                            child: DiscountWidget(discount: discount),
-                          );
-                        },
-                      );
+                    else {
+                          List<Discount> discounts = makeList(snapshot.data.docs);
+                          print("tst");
+                          print(discounts);
+                          return DiscountWidget(discounts: discounts);
+                    }
                   }))
         ],
       ),
