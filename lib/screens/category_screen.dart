@@ -9,19 +9,21 @@ import 'package:forsale/widgets/discount_widget.dart';
 List<Discount> makeList(var snapshot) {
   print("12134324324354");
   List<Discount> res = [];
-  print(snapshot.length);
-  for (var i = 0; i < snapshot.length; i++) {
+  snapshot.docs.forEach((doc) {
     Discount discount = Discount(
-      rate: snapshot[i]['rate'],
-      imageURL: snapshot[i]['imageURL'],
-      description: snapshot[i]['description'],
-      discount: snapshot[i]['discount'], 
-      category: snapshot[i]['category'],
+      rate: doc['rate'],
+      imageURL: doc['imageURL'],
+      description: doc['description'],
+      discount: doc['discount'], 
+      category: doc['category'],
+      title: doc['title'],
+      id: doc.id,
     );
-
-    print(discount.rate);
+    print(discount.id);
+    //print(snapshot);
     res.add(discount);
-  }
+    
+  });
   return res;
 }
 
@@ -69,7 +71,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             child: CircularProgressIndicator()),
                       );
                     else {
-                          List<Discount> discounts = makeList(snapshot.data.docs);
+                          List<Discount> discounts = makeList(snapshot.data);
                           print("tst");
                           print(discounts);
                           return DiscountWidget(discounts: discounts);

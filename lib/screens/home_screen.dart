@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:forsale/authentication_service.dart';
 import 'package:forsale/models/discount.dart';
 import 'package:forsale/widgets/app_bar.dart';
 import 'package:forsale/widgets/category_widget.dart';
-
+import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   final Discount random = Discount(
       imageURL: "assets/images/burger.jpg",
       discount: 50,
       description: "Takeaway discount",
       rate: 5,
-      category: "food");
+      category: "food",
+      title: "Something tasty",
+      id: "RANFWENRKG",
+      );
 
   @override
   Widget build(BuildContext context) {
+    print(context.read<AuthenticationService>().currentUser());
     return Scaffold(
       appBar: CustomAppBar(),
       body: Padding(

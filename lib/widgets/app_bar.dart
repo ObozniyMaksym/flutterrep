@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:forsale/main.dart';
 import 'package:forsale/screens/add_discount.dart';
 import 'package:provider/provider.dart';
 import '../authentication_service.dart';
@@ -18,6 +19,13 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         ElevatedButton(
           onPressed: () {
             context.read<AuthenticationService>().signOut();
+            Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => AuthenticationWrapper(),
+      ),
+      (route) => false,
+    );
           },
           style: ButtonStyle(
             backgroundColor:

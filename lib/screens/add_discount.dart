@@ -2,9 +2,28 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:flutter_gravatar/flutter_gravatar.dart';
 import 'package:forsale/models/category.dart';
 import 'package:forsale/widgets/app_bar.dart';
+
+Future<dynamic> _showDialog(BuildContext context) {
+  return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Succesfully added"),
+          actions: [
+            TextButton(
+              child: Text("Cool!"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      });
+}
+
 
 class AddDiscountScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormBuilderState>();
@@ -24,7 +43,13 @@ class AddDiscountScreen extends StatelessWidget {
                           key: _formKey,
                           child: Column(children: [
                             FormBuilderTextField(
+                                name: "title",
+                                validator: FormBuilderValidators.required(context, errorText: "Title cannot be empty"),
+                                decoration:
+                                    InputDecoration(labelText: "Title")),
+                            FormBuilderTextField(
                                 name: "description",
+                                validator: FormBuilderValidators.required(context, errorText: "Description cannot be empty"),
                                 decoration:
                                     InputDecoration(labelText: "Description")),
                             FormBuilderSlider(
@@ -42,29 +67,38 @@ class AddDiscountScreen extends StatelessWidget {
                                         value: c.title,
                                         child: Text('${c.title}')))
                                     .toList(),
+                                validator: FormBuilderValidators.required(context, errorText: "Please choose category"),
+                                
                                 decoration: InputDecoration(
                                   labelText: "Category",
                                 )),
                           ])),
                       SizedBox(height: 15),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           _formKey.currentState.save();
+                          if (_formKey.currentState.validate()) {
                           Map<String, dynamic> ds = _formKey.currentState.value;
                           print(ds);
-                          var imageURL =
-                              Gravatar("random_email@gmail.com").imageUrl();
+
+                          String url = ds['title'];
+                          if (url.indexOf(' ') != -1)
+                            url = url.substring(0, url.indexOf(' '));
+                          var imageURL = "https://loremflickr.com/320/240/$url";
                           print(imageURL.toString());
                           Map<String, dynamic> q = {
                             'description': ds['description'],
                             'discount': ds['discount'],
                             'category': ds['category'],
                             'imageURL': imageURL.toString(),
+                            'title': ds['title'],
                             'rate': 0,
                           };
-                          FirebaseFirestore.instance
+                          await FirebaseFirestore.instance
                               .collection('discounts')
                               .add(q);
+                          _showDialog(context);
+                          }
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.resolveWith(

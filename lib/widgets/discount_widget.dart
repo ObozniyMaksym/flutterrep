@@ -23,6 +23,7 @@ class DiscountWidget extends StatelessWidget {
                 ),
             child: Column(
               children: [
+                //Text(discount.id, style: TextStyle(color: Colors.red, fontSize: 40)),
                 SizedBox(height: 20),
                 Container(
                     width: MediaQuery.of(context).size.width * 0.85,
