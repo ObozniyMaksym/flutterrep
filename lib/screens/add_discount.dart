@@ -83,12 +83,12 @@ class AddDiscountScreen extends StatelessWidget {
 
                           String url = ds['title'];
                           if (url.indexOf(' ') != -1)
-                            url = url.substring(0, url.indexOf(' '));
+                            url = url.substring(0, url.indexOf(' ')).toLowerCase();
                           var imageURL = "https://loremflickr.com/320/240/$url";
                           print(imageURL.toString());
                           Map<String, dynamic> q = {
                             'description': ds['description'],
-                            'discount': ds['discount'],
+                            'discount': ds['discount'].round(),
                             'category': ds['category'],
                             'imageURL': imageURL.toString(),
                             'title': ds['title'],

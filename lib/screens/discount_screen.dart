@@ -175,9 +175,9 @@ class DiscountScreen extends StatelessWidget {
                         child: Text(discount.description,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            maxLines: 5,
+                            maxLines: 20,
                             style:
-                                TextStyle(color: Colors.black, fontSize: 30)),
+                                TextStyle(color: Colors.black, fontSize: 20)),
                       ),
                     ),
                   ),

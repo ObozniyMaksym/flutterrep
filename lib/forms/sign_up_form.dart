@@ -4,6 +4,11 @@ import 'package:forsale/screens/sign_in.dart';
 import 'package:provider/provider.dart';
 import '../authentication_service.dart';
 
+dynamic _showSnackBar(BuildContext context) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Email is already used by another user")));
+}
+
 Future<dynamic> _showDialog(BuildContext context) {
   return showDialog(
       barrierDismissible: false,
@@ -83,10 +88,11 @@ class _SignUpFormState extends State<SignUpForm> {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                       Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SignInScreen()),
-                      );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SignInScreen()),
+                        );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith(
@@ -106,11 +112,19 @@ class _SignUpFormState extends State<SignUpForm> {
                         if (_formKey.currentState.validate()) {
                           print("something");
                           print(emailController.text.trim());
-                          context.read<AuthenticationService>().signUp(
+                          context
+                              .read<AuthenticationService>()
+                              .signUp(
                                 emailController.text.trim(),
                                 passwordController.text.trim(),
-                              );
-                          _showDialog(context);
+                              )
+                              .then((str) {
+                            if (str == "Signed Up")
+                              _showDialog(context);
+                            else {
+                              _showSnackBar(context);
+                            }
+                          });
                         }
                       },
                       style: ButtonStyle(

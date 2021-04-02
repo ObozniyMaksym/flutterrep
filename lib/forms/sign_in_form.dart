@@ -3,6 +3,13 @@ import 'package:forsale/authentication_service.dart';
 import 'package:forsale/screens/sign_up.dart';
 
 import 'package:provider/provider.dart';
+
+dynamic _showSnackBar(BuildContext context) {
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(content: Text("Email or password is incorrect"))
+  );
+}
+
 class SignInForm extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -38,10 +45,13 @@ return Column(
             children: [
               ElevatedButton(
                 onPressed: () {
-                  print(context.read<AuthenticationService>().signIn(
+                  context.read<AuthenticationService>().signIn(
                         emailController.text.trim(),
                         passwordController.text.trim(),
-                      ));
+                      ).then((str) {
+                        if (str != "Signed In")
+                          _showSnackBar(context);
+                      });
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.resolveWith(
